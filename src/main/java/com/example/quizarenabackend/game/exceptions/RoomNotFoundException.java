@@ -1,4 +1,6 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.game.exceptions;
+
+import com.example.quizarenabackend.exceptions.FriendlyException;
 
 public class RoomNotFoundException extends FriendlyException {
     private final static String CODE = "ROOM_NOT_FOUND";

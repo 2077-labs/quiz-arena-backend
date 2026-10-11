@@ -24,5 +24,7 @@ public class GameResult {
     private Instant playedAt;
     @NotBlank
     private String nick;
+    @NotBlank
+    private String roomSessionId;
     private int score;
 }

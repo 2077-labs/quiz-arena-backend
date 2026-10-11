@@ -1,4 +1,4 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.game.exceptions;
 
 public enum InvalidRoomStateExceptionReason {
     JOINING,

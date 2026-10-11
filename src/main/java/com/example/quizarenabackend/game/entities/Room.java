@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -13,6 +14,7 @@ public class Room {
     private final String code;
     private final Quiz quiz;
     private final String hostId;
+    private final String roomSessionId = UUID.randomUUID().toString();
     private RoomState state = RoomState.LOBBY;
     private final Map<String, Player> players = new LinkedHashMap<>();
     private Round round;
