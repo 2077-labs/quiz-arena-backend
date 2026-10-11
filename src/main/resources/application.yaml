@@ -1,0 +1,16 @@
+spring:
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
+  application:
+    name: QuizArenaBackend
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5433/quizarena
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver

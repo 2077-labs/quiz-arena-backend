@@ -1,0 +1,8 @@
+package com.example.quizarenabackend.exceptions;
+
+public class RoomFullException extends FriendlyException {
+    public static final String CODE = "ROOM_FULL";
+    public RoomFullException() {
+        super(CODE, "Pokój jest pełny.");
+    }
+}
