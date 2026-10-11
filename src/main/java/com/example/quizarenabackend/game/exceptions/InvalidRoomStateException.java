@@ -1,5 +1,6 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.game.exceptions;
 
+import com.example.quizarenabackend.exceptions.FriendlyException;
 import com.example.quizarenabackend.game.entities.RoomState;
 
 public class InvalidRoomStateException extends FriendlyException {

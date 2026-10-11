@@ -1,4 +1,6 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.game.exceptions;
+
+import com.example.quizarenabackend.exceptions.FriendlyException;
 
 public class NickTakenException extends FriendlyException {
     public static final String CODE = "NICK_TAKEN";

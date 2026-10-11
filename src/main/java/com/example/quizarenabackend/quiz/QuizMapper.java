@@ -6,11 +6,13 @@ import com.example.quizarenabackend.quiz.entities.Question;
 import com.example.quizarenabackend.quiz.entities.Quiz;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface QuizMapper {
     AnswerOption toAnswerOptionEntity(CreateQuestionAnswerDto createQuestionAnswerDto);
+    @Mapping(target="answerOptions", source="options")
     Question toQuestionEntity(CreateQuestionDto createQuestionDto);
     Quiz toQuizEntity(CreateQuizDto createQuizDto);
 

@@ -1,4 +1,6 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.game.exceptions;
+
+import com.example.quizarenabackend.exceptions.FriendlyException;
 
 public class InvalidPlayerOrTokenRejoinException extends FriendlyException {
     public static final String CODE = "INVALID_PLAYER_OR_TOKEN_REJOIN";

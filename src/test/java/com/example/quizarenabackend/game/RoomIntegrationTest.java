@@ -1,7 +1,6 @@
 package com.example.quizarenabackend.game;
 
 import com.example.quizarenabackend.dtos.ErrorDto;
-import com.example.quizarenabackend.exceptions.QuizNotFoundException;
 import com.example.quizarenabackend.game.dtos.CreateRoomRequest;
 import com.example.quizarenabackend.game.dtos.CreateRoomResponse;
 import com.example.quizarenabackend.game.entities.RoomState;
@@ -9,6 +8,7 @@ import com.example.quizarenabackend.quiz.QuizRepository;
 import com.example.quizarenabackend.quiz.entities.AnswerOption;
 import com.example.quizarenabackend.quiz.entities.Question;
 import com.example.quizarenabackend.quiz.entities.Quiz;
+import com.example.quizarenabackend.quiz.exceptons.QuizNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
