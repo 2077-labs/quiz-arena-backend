@@ -15,7 +15,7 @@ public class CurrentQuestionDto {
     private int index;
     private int totalQuestions;
     private String text;
-    private List<AnswerOptionDto> options;
+    private List<GameQuestionOptionDto> options;
     private long endsAt;
     private long serverNow;
 }

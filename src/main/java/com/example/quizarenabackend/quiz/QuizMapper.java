@@ -1,5 +1,7 @@
 package com.example.quizarenabackend.quiz;
 
+import com.example.quizarenabackend.game.dtos.CurrentQuestionDto;
+import com.example.quizarenabackend.game.dtos.GameQuestionOptionDto;
 import com.example.quizarenabackend.quiz.dtos.*;
 import com.example.quizarenabackend.quiz.entities.AnswerOption;
 import com.example.quizarenabackend.quiz.entities.Question;
@@ -20,6 +22,11 @@ public interface QuizMapper {
     QuestionDto toQuestionDto(Question question);
     QuizDto toQuizDto(Quiz quiz);
     QuizWithQuestionsDto toQuizWithQuestionsDto(Quiz quiz);
+    GameQuestionOptionDto toGameQuestionOptionDto(AnswerOption answerOption);
+    @Mapping(target = "index", source="questionQuizIndex")
+    @Mapping(target="questionId", source="question.id")
+    @Mapping(target="options", source="question.answerOptions")
+    CurrentQuestionDto toCurrentQuestionDto(Question question, int questionQuizIndex, int totalQuestions, long endsAt, long serverNow);
 
     void updateQuizFromDto(CreateQuizDto createQuizDto, @MappingTarget Quiz quiz);
 
