@@ -1,9 +1,14 @@
 package com.example.quizarenabackend.quiz;
 
 import com.example.quizarenabackend.dtos.ErrorDto;
+import com.example.quizarenabackend.dtos.PageableResponse;
 import com.example.quizarenabackend.quiz.dtos.CreateQuizDto;
+import com.example.quizarenabackend.quiz.dtos.GetQuizzesRequest;
+import com.example.quizarenabackend.quiz.dtos.QuizDto;
 import com.example.quizarenabackend.quiz.dtos.QuizWithQuestionsDto;
+import com.example.quizarenabackend.quiz.entities.Quiz;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,9 +16,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -79,7 +90,45 @@ public class QuizController {
             )
     })
     public ResponseEntity<QuizWithQuestionsDto> getQuizWithQuestions(@PathVariable Long quizId) {
-        QuizWithQuestionsDto quizWithQuestionsDto = quizService.getQuizWithQuestions(quizId);
+        QuizWithQuestionsDto quizWithQuestionsDto = quizService.getQuizWithQuestionsDto(quizId);
         return ResponseEntity.ok(quizWithQuestionsDto);
+    }
+
+    private static class PagedQuizzesResponse extends PageableResponse<QuizDto> {
+    }
+    @Operation(summary = "Pobieranie listy quizów", description = "Zwraca listę quizów na podstawie przesłanych parametrów. Zwraca status 200 OK w przypadku powodzenia.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Lista quizów została pomyślnie pobrana",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = PagedQuizzesResponse.class))
+            )
+    })
+    @GetMapping
+    public ResponseEntity<PageableResponse<QuizDto>> getQuizzes(
+            @ParameterObject @PageableDefault(size = 10, sort = "id") Pageable pageable,
+            @ParameterObject GetQuizzesRequest request
+    ) {
+        var page = quizService.getQuizzes(request, pageable);
+        return ResponseEntity.ok(PageableResponse.of(page));
+    }
+
+    private interface TrendingQuizzesResponse extends List<QuizDto> {
+    }
+    @Operation(summary = "Pobieranie listy najpopularniejszych quizów", description = "Zwraca listę najpopularniejszych quizów na podstawie liczby uruchomień. Zwraca status 200 OK w przypadku powodzenia.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Lista najpopularniejszych quizów została pomyślnie pobrana",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = TrendingQuizzesResponse.class))
+            )
+    })
+    @GetMapping("/trending")
+    public ResponseEntity<List<QuizDto>> getTrendingQuizzes(
+            @Parameter(description = "Maksymalna liczba quizów do pobrania")
+            @RequestParam(defaultValue = "10") int limit
+    ) {
+        List<QuizDto> trending = quizService.getTrendingQuizzes(limit);
+        return ResponseEntity.ok(trending);
     }
 }

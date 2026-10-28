@@ -32,3 +32,5 @@ quizarena:
     heartbeat-timeout: 30s
     # How often the heartbeat check is performed
     heartbeat-interval: 15s
+  search:
+    trending-timeframe: 7d

@@ -11,6 +11,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Objects;
 import java.util.concurrent.*;
 
@@ -21,6 +22,8 @@ public class Room {
     private final String code;
     private final Quiz quiz;
     private final String hostId;
+    private final String roomSessionId = UUID.randomUUID().toString();
+    private RoomState state = RoomState.LOBBY;
     private final Map<String, Player> players = new LinkedHashMap<>();
 
     @Setter private RoomState state = RoomState.LOBBY;

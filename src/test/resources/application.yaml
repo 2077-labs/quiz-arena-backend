@@ -7,4 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: false
+    show-sql: true
+quizarena:
+  search:
+    trending-timeframe: 7d

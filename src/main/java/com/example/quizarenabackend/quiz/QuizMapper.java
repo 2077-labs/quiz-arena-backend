@@ -14,6 +14,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface QuizMapper {
     AnswerOption toAnswerOptionEntity(CreateQuestionAnswerDto createQuestionAnswerDto);
+    @Mapping(target="answerOptions", source="options")
     Question toQuestionEntity(CreateQuestionDto createQuestionDto);
     Quiz toQuizEntity(CreateQuizDto createQuizDto);
 
