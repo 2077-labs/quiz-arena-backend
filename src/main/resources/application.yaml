@@ -14,3 +14,21 @@ spring:
     username: admin
     password: password
     driver-class-name: org.postgresql.Driver
+quizarena:
+  ws:
+    # How long after finishing the round the participants can still send answers (to avoid losing answers due to network lag)
+    answer-grace: 500ms
+    # How long host may be away before the room gets closed
+    host-grace: 60s
+    # How long after the room gets created the host has to connect
+    host-first-connect: 2m
+    # How long the room can be idle before it gets closed
+    room-idle-timeout: 30m
+    # How long after the room is finished it will be kept in memory before being removed
+    finished-room-ttl: 10m
+    # How often the sweep for inactive rooms is performed
+    inactive-room-sweep-interval: 10m
+    # How long after the last heartbeat the participant is considered disconnected
+    heartbeat-timeout: 30s
+    # How often the heartbeat check is performed
+    heartbeat-interval: 15s

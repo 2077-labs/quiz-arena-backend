@@ -1,7 +1,6 @@
 package com.example.quizarenabackend.quiz;
 
 import com.example.quizarenabackend.dtos.ErrorDto;
-import com.example.quizarenabackend.exceptions.QuizNotFoundException;
 import com.example.quizarenabackend.quiz.dtos.CreateQuizDto;
 import com.example.quizarenabackend.quiz.dtos.QuizWithQuestionsDto;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,4 +1,6 @@
-package com.example.quizarenabackend.exceptions;
+package com.example.quizarenabackend.quiz.exceptons;
+
+import com.example.quizarenabackend.exceptions.FriendlyException;
 
 public class NoQuestionsQuizException extends FriendlyException {
     public static final String CODE = "NO_QUESTIONS_QUIZ";
