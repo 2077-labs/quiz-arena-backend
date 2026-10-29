@@ -26,7 +26,6 @@ public class Room {
     private RoomState state = RoomState.LOBBY;
     private final Map<String, Player> players = new LinkedHashMap<>();
 
-    @Setter private RoomState state = RoomState.LOBBY;
     @Setter private Round round;
     @Setter private int questionIndex = -1;
     @Setter private ScheduledFuture<?> roundTimer;

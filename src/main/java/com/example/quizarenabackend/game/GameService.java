@@ -37,6 +37,7 @@ public class GameService {
         if (messages.participants(room).isEmpty()) {
             throw new NoPlayersException();
         }
+        startQuestion(room);
     }
 
     public void submitAnswer(Room room, Player player, ClientMessage.SubmitAnswer msg) {
@@ -168,6 +169,7 @@ public class GameService {
                         result.setQuiz(room.getQuiz());
                         result.setNick(p.getNick());
                         result.setScore(p.getScore());
+                        result.setRoomSessionId(room.getRoomSessionId());
                         result.setPlayedAt(playedAt);
                         return result;
                     }).toList();
