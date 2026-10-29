@@ -19,6 +19,7 @@ public interface QuizMapper {
     Quiz toQuizEntity(CreateQuizDto createQuizDto);
 
     AnswerOptionDto toAnswerOptionDto(AnswerOption answerOption);
+    @Mapping(target="options", source="answerOptions")
     QuestionDto toQuestionDto(Question question);
     QuizDto toQuizDto(Quiz quiz);
     QuizWithQuestionsDto toQuizWithQuestionsDto(Quiz quiz);

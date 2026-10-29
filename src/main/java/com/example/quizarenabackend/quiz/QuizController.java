@@ -23,6 +23,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -48,8 +50,13 @@ public class QuizController {
 
     })
     public ResponseEntity<Void> createQuiz(@Valid @RequestBody CreateQuizDto dto) {
-        quizService.createQuiz(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        var quiz = quizService.createQuiz(dto);
+        var uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(quiz.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PatchMapping("/{quizId}")

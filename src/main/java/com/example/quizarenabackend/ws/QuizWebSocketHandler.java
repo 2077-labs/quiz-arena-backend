@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.PongMessage;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
@@ -79,10 +76,11 @@ public class QuizWebSocketHandler extends TextWebSocketHandler {
                 // Dead connections may not deliver afterConnectionClosed, therefore we call disconnected here to ensure
                 // the room is cleaned up.
                 roomService.disconnected(session);
+                continue;
             }
             try {
                 synchronized (session) {
-                    session.sendMessage(new PongMessage());
+                    session.sendMessage(new PingMessage());
                 }
             } catch (IOException | IllegalStateException e) {
                 log.error("Nie udało się wysłać wiadomości ping do sesji {}: {}", session.getId(), e.getMessage());

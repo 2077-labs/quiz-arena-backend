@@ -58,6 +58,7 @@ class RoomIntegrationTest {
     void createQuiz() {
         Quiz quiz = new Quiz();
         quiz.setTitle("Test quiz");
+        quiz.setDescription("This is a test quiz");
 
         Question q = new Question();
         q.setText("2 + 2 = ?");
@@ -78,14 +79,17 @@ class RoomIntegrationTest {
 
         Quiz noQuestionsQuiz = new Quiz();
         noQuestionsQuiz.setTitle("No questions quiz");
+        noQuestionsQuiz.setDescription("This quiz has no questions");
         noQuestionsQuizId = quizRepository.save(noQuestionsQuiz).getId();
     }
 
     @AfterEach
-    void closeSockets() {
+    void cleanUp() {
         for (WebSocketSession s : openSessions) {
             try { s.close(); } catch (IOException ignored) { }
         }
+
+        quizRepository.deleteAll();
     }
 
     // REST
@@ -160,17 +164,16 @@ class RoomIntegrationTest {
 
         JsonNode alaLobby = ala.next();
         assertEquals("lobby_update", alaLobby.get("type").asString());
-        assertEquals("Ala", alaLobby.get("nicks").get(0).asString());
+        assertEquals("Ala", alaLobby.get("nicks").get(1).asString());
 
         JsonNode hostLobby = host.next();
         assertEquals("lobby_update", hostLobby.get("type").asString());
-        assertEquals(1, hostLobby.get("nicks").size());
-        assertEquals("Ala", hostLobby.get("nicks").get(0).asString());
+        assertEquals(2, hostLobby.get("nicks").size());
 
         ala.session.close();
         JsonNode afterLeave = host.next();
         assertEquals("lobby_update", afterLeave.get("type").asString());
-        assertEquals(0, afterLeave.get("nicks").size());
+        assertEquals(1, afterLeave.get("nicks").size());
     }
 
     @Test
@@ -229,13 +232,17 @@ class RoomIntegrationTest {
         host.send(Map.of("type", "rejoin", "roomCode", room.getRoomCode(),
                 "playerId", room.getPlayerId(), "token", room.getToken()));
 
+        JsonNode hostStatus = host.next();
+        assertEquals("host_status", hostStatus.get("type").asString());
+
         JsonNode snapshot = host.next();
         assertEquals("rejoin_snapshot", snapshot.get("type").asString());
-        assertEquals(RoomState.LOBBY.toString(), snapshot.get("roomState").asString());
+        assertEquals(RoomState.LOBBY.toString(), snapshot.get("snapshot").get("roomState").asString());
 
         JsonNode lobby = host.next();
         assertEquals("lobby_update", lobby.get("type").asString());
-        assertEquals(0, lobby.get("nicks").size());
+        assertEquals(1, lobby.get("nicks").size());
+        assertEquals("Host", lobby.get("nicks").get(0).asString());
         return host;
     }
 

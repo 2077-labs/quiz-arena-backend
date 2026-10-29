@@ -270,7 +270,6 @@ public class RoomService {
 
     private void broadcastLobby(Room room) {
         List<String> nicks = room.getPlayers().values().stream()
-                .filter(p -> !room.isHost(p))
                 .map(Player::getNick)
                 .toList();
         ServerMessage msg = new ServerMessage.LobbyUpdate(nicks);
